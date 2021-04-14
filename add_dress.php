@@ -4,12 +4,14 @@
 
 
 
-	
+	# Checking the method of the form.
 	if ($_SERVER['REQUEST_METHOD']  == 'POST'){
 		if(!isset($_POST['edit'])){
 
+			# Either adding a new dress to the database or updating an existing dress
 			if (isset($_POST['add_dress'])){
 
+				# Determing the highest id in the database.
 				$sql    = 'SELECT `id` FROM `clothes`  ORDER BY `id` DESC';
 				$stmt   = $con-> prepare($sql);
 				$stmt->execute();
@@ -20,6 +22,7 @@
 					echo $row;
 				}
 
+				# Uploading image to the image folder.
 				if (isset($_FILES['front'])){
 					move_uploaded_file($_FILES['front']['tmp_name'], 'images/'. $_POST['id'] .'front.jpg');
 				}
@@ -29,7 +32,7 @@
 				if (isset($_FILES['side'])){
 					move_uploaded_file($_FILES['side']['tmp_name'], 'images/'. $_POST['id'] .'side.jpg');
 				}
-
+				# Inserting the data into the database.
 				$sql 	=	'INSERT INTO `clothes` 
 										(`title`, 
 										`category`, 
@@ -54,7 +57,7 @@
 									$_POST['size']
 								));
 			}else{
-
+				# Updating the image in the image folder.
 				if (isset($_FILES['front'])){
 					move_uploaded_file($_FILES['front']['tmp_name'], 'images/'. $_POST['id'] .'front.jpg');
 				}
@@ -65,6 +68,7 @@
 					move_uploaded_file($_FILES['side']['tmp_name'], 'images/'. $_POST['id'] .'side.jpg');
 				}
 
+				# Updating the database.
 				$sql	=	'UPDATE `clothes` 
 							SET `title`			=	?,
 								`category`		=	?,
@@ -91,6 +95,7 @@
 								));
 			}
 
+			# Redirecting to the admin dashboard after adding new dress or updating a dress.
 			header('Location:admin.php');
 		}
 	}
@@ -100,12 +105,17 @@
 
 ?>
 <h1 class="text-info"><?php if (isset($_POST['edit'])){echo 'Edit Dress';}else{echo 'New Dress';} ?></h1>
+
+<!-- Entry of data in the database-->
 <form action="add_dress.php" method="post" enctype="multipart/form-data">
+
+	<!-- ID -->
 	<input type="hidden" class="form-control mb-2" name="id" value="<?php echo isset($_POST['id']) ? $_POST['id'] : 'Title';  ?>">
 
+	<!-- Title-->
 	<input type="text" class="form-control mb-2" name="title" value="<?php echo isset($_POST['title']) ? $_POST['title'] : 'Title';  ?>">
 
-
+	<!-- Category selection-->
 	<select name="category" class="form-control mb-2">
 		<option><?php echo isset($_POST['category']) ? $_POST['category'] : 'Select category';  ?></option>
 		<option>Men</option>
@@ -113,6 +123,7 @@
 		<option>Children</option>
 	</select>
 
+	<!-- Material selection -->
 	<select name="material" class="form-control mb-2">
 		<option><?php echo isset($_POST['material']) ? $_POST['material'] : 'Select material';  ?></option>
 		<option>Cotton</option>
@@ -121,6 +132,7 @@
 		<option>Polyester</option>
 	</select>
 
+	<!-- Checking avialabilityy -->
 	<h5 style="display:inline;">Availability: </h5>
 	<div class="radio"  style="display: inline-block;">	
 		<label>
@@ -141,6 +153,8 @@
 		</label>
 	</div>
 	<br>
+
+	<!-- Image selection -->
 	<div class="row justify-content-center">
 	<fieldset style="display:inline">
 		<label>Front image</label>
@@ -157,10 +171,10 @@
 	</div>
 
 
-
+	<!-- Price input-->
 	<input type="text" name="price" class="form-control mb-2" value="<?php echo isset($_POST['price']) ? $_POST['price'] : 'Enter Price';  ?>">
 
-
+	<!-- Size selection -->
 	<select name="size" class="form-control mb-2">
 		<option><?php echo isset($_POST['size']) ? $_POST['size'] : 'Select your size';  ?></option>
 		<option>Extra small</option>
@@ -171,6 +185,7 @@
 		<option>Extra extra large</option>
 	</select>
 	
+	<!-- Display of button value and name. -->
 	<div class="row justify-content-center m-3">
 		<button type="submit" name="<?php 	if (isset($_POST['edit'])){ 
 												echo 'update';

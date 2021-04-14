@@ -1,4 +1,6 @@
 <?php 
+# A page for displaying the details about a dress.
+
     #add the head and header of the page
     include_once('partials/header.php');
 

@@ -1,5 +1,5 @@
 <?php
-
+# Adding the path and connection to the header page.
 include_once('path.php');
 require_once('partials/connect.php');
 
@@ -37,13 +37,14 @@ require_once('partials/connect.php');
                     <div class="navbar-nav">
 
                     <?php 
-                        # Nav links ...................
+                        # Navigation items ...................
                         $nav_lists   =   ['Home'    =>  'index.php',
                                         'Men'     =>  'category.php',
                                         'Women'   =>  'category.php',
                                         'Children'=>  'category.php',
                                         'Contact' =>  'contact.php'];
 
+                        # Creating the navigation link to the other pages.
                         foreach($nav_lists as $key => $value){ 
                             echo '<form action="'. $value .'" method="post">
                             <input type="hidden" name="category" value="'. $key .'">

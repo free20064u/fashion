@@ -4,12 +4,13 @@
 
     
 
-    # Deleting item form admins dashbord.
+    # Deleting item from the database.
     if(isset($_POST['delete'])){
         $sql    =   'DELETE FROM `clothes` WHERE `id` = (?)';
         $stmt   =   $con -> prepare($sql);
         $stmt   ->  execute(array($_POST['id']));
 
+        # Deleting images from the images folder once an item is deleted.
         unlink('images/'. $_POST['id'] .'front.jpg');
         unlink('images/'. $_POST['id'] .'back.jpg');
         unlink('images/'. $_POST['id'] .'side.jpg');
@@ -28,7 +29,7 @@
 ?>
 
 <h1 class="text-info">ADMIN</h1>
-
+    <!-- Creating a table and displaying the content from the database -->
 <div class="table-responsive">
 <table class="table table-hover">
     <thead class="bg-info">

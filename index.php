@@ -1,4 +1,6 @@
 <?php 
+#A landing page of the website.
+
     #add the head and header of the page
     include_once('partials/header.php');
 
@@ -8,6 +10,7 @@
 <div class="card-deck">
 
 <?php  
+# Selecting items from the database and displaying them.
 $sql    = 'SELECT * FROM `clothes`  ORDER BY `id` DESC';
 $stmt   = $con-> prepare($sql);
 $stmt->execute();

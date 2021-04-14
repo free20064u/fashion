@@ -1,7 +1,10 @@
-<?php 
+<?php
+# A page for displaying content from the database based on the category of the dress.
+
     #add the head and header of the page
     include_once('partials/header.php');
 
+    #Selecting dress from the database based on the category they belong to.
     $sql    =   'SELECT * FROM `clothes` WHERE `category` = (?)';
     $stmt   =   $con -> prepare($sql);
     $stmt -> execute(array($_POST['category']));
@@ -13,7 +16,7 @@
   <div class="card-deck">
 
 <?php  
-
+    # Displaying content from the database in the card deck
     foreach ($rows as $row){
         echo '<div class="col-3">
             <div class="card" style="margin: 5px;">
