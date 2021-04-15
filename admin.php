@@ -2,10 +2,11 @@
     #add the head and header of the page
     include_once('partials/header.php');
 
-    
+if (isset($_SESSION['username'])){
 
-    # Deleting item from the database.
-    if(isset($_POST['delete'])){
+
+        # Deleting item from the database.
+        if(isset($_POST['delete'])){
         $sql    =   'DELETE FROM `clothes` WHERE `id` = (?)';
         $stmt   =   $con -> prepare($sql);
         $stmt   ->  execute(array($_POST['id']));
@@ -16,8 +17,6 @@
         unlink('images/'. $_POST['id'] .'side.jpg');
     }
     
-
-
 
 
     # Selecting items to be displayed on admins dashboard.
@@ -93,4 +92,8 @@
     #add the footer section of the page.
     include_once('partials/footer.php');
 
-?>
+
+}
+
+
+
